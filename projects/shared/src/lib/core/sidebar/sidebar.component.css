@@ -1,0 +1,8 @@
+.active {
+    background-color: grey;
+}
+
+.item-list {
+    display: flex;
+    flex-direction: column;
+}

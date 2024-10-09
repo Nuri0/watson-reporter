@@ -1,0 +1,3 @@
+@if (optionSignal()) {
+    <div echarts [options]="optionSignal()" (chartInit)="onChartInit($event)" (chartClick)="chartClicked($event)"></div>
+}

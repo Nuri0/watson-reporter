@@ -1,0 +1,15 @@
+.main {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+lib-header {
+    flex-grow: 0;
+}
+
+mat-sidenav-container {
+    flex-grow: 0;
+    /* width: 400px: */
+    height: 100%;
+}

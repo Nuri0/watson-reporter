@@ -1,0 +1,1 @@
+{"migrated":{"identifier":"migrated","description":"permissions that were migrated from v1","local":true,"windows":["main"],"permissions":["core:default",{"identifier":"shell:allow-execute","allow":[{"args":true,"cmd":"watson","name":"watson","sidecar":false}]},"shell:default"]}}

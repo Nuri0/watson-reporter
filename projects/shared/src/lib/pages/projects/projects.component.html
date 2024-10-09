@@ -1,0 +1,5 @@
+<lib-project-list [projects]="projectsSignal()"></lib-project-list>
+
+@if (projectTimesThisMonthSignal()) {
+    <lib-report-pie-chart [report]="projectTimesThisMonthSignal()!"></lib-report-pie-chart>
+}
