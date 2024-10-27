@@ -49,4 +49,15 @@ export class WatsonCliService implements WatsonDataProviderService {
       map(result => convertToReport(result.stdout))
     )
   }
+
+  editLog(id: string): Observable<void> {
+    const commandParams = ['edit'];
+    if (id !== 'current') {
+      commandParams.push(id);
+    }
+    const command = Command.create(this.WATSON_CLI_SCOPE_NAME, commandParams);
+    return from(command.execute()).pipe(
+      map(() => {})
+    )
+  }
 }

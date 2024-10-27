@@ -1,0 +1,73 @@
+<form [formGroup]="form">
+  <h2 mat-dialog-title>Edit Frame</h2>
+  <mat-dialog-content>
+    <mat-form-field class="__full-width">
+      <mat-label>ID</mat-label>
+      <input [formControl]="form.controls.id" readonly matInput />
+    </mat-form-field>
+
+    <!-- <mat-form-field class="__full-width">
+      <mat-label>Last updated</mat-label>
+      <input
+        [formControl]="form.controls.lastUpdated"
+        type="datetime"
+        readonly
+        matInput
+        placeholder="label"
+        value="value"
+      />
+    </mat-form-field> -->
+
+    <div class="__full-width __flex-horizontal">
+      <mat-form-field class="__full-width">
+        <mat-label>Start</mat-label>
+        <mtx-datetimepicker #datetimepickerstart>
+
+        </mtx-datetimepicker>
+        <input
+          [formControl]="form.controls.start"
+          matInput
+          [mtxDatetimepicker]="datetimepickerstart"
+        />
+        <mtx-datetimepicker-toggle [for]="datetimepickerstart" matSuffix></mtx-datetimepicker-toggle>
+      </mat-form-field>
+
+      <mat-form-field class="__full-width">
+        <mat-label>Stop</mat-label>
+        <mtx-datetimepicker #datetimepickerstop>
+
+        </mtx-datetimepicker>
+        <input
+          [formControl]="form.controls.stop"
+          matInput
+          [mtxDatetimepicker]="datetimepickerstop"
+        />
+        <mtx-datetimepicker-toggle [for]="datetimepickerstop" matSuffix></mtx-datetimepicker-toggle>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field class="__full-width">
+      <mat-label>Project</mat-label>
+      <mat-select [formControl]="form.controls.project">
+        @for (project of data.projects; track $index) {
+          <mat-option [value]="project">{{project}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="__full-width">
+      <mat-label>Tags</mat-label>
+      <mat-select [formControl]="form.controls.tags" multiple>
+        @for (tag of data.tags; track $index) {
+          <mat-option [value]="tag">{{tag}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" mat-dialog-close>Cancel</button>
+    <button mat-button type="button" [mat-dialog-close]="form.value" [disabled]="form.pristine">Save</button>
+  </mat-dialog-actions>
+
+</form>

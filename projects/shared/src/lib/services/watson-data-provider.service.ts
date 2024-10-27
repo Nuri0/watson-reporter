@@ -10,5 +10,6 @@ export interface WatsonDataProviderService {
   listTags(): Observable<Array<string>>;
   // getProjectTimes(start: Date, end: Date): Observable<Report>;
   getProjectTimesForCurrentMonth(): Observable<Report>;
+  editLog(id: string): Observable<void>;
 
 }

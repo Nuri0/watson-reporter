@@ -23,4 +23,7 @@ export class DashboardComponent {
   dataProvider: WatsonDataProviderService = inject(WATSON_DATA_PROVIDER_TOKEN);
   todaysLog: Signal<Array<Log>> = toSignal(this.dataProvider.getTodaysLog(), {initialValue: []})
 
+  frameClicked(frameId: string) {
+    this.dataProvider.editLog(frameId).subscribe();
+  }
 }

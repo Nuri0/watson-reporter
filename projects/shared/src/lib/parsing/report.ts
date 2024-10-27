@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const ReportSchema = z.object({
+export const ReportSchema = z.object({
     projects: z.object({
         name: z.string(),
         tags: z.object({

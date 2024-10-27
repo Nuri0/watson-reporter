@@ -61,7 +61,6 @@ export class ReportPieChartComponent {
   });
 
   chartClicked($event: ECElementEvent) {
-    console.log($event);
     // TODO get data typed
     // @ts-ignore
     const project = this.report()?.projects.filter(p => p.name === $event.data?.name)[0];

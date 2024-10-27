@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, filter, map, Observable, Subject } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { BehaviorSubject, EMPTY, filter, map, Observable, switchMap, take, tap, zip } from 'rxjs';
+import { FrameDialogComponent, FrameDialogInput } from '../components/frame-dialog/frame-dialog.component';
 import { Frame, FrameFile } from '../parsing/frames';
-import { Log } from '../parsing/log';
 import { Report } from '../parsing/report';
 import { WatsonDataProviderService } from './watson-data-provider.service';
 
@@ -9,9 +10,11 @@ import { WatsonDataProviderService } from './watson-data-provider.service';
   providedIn: 'root',
 })
 export class WatsonStoreService implements WatsonDataProviderService {
+  private dialogService = inject(MatDialog);
+
   private readonly LOCAL_STORAGE_KEY = 'frames';
 
-  private frameSubject: Subject<FrameFile> = new BehaviorSubject<FrameFile>([]);
+  private frameSubject: BehaviorSubject<FrameFile> = new BehaviorSubject<FrameFile>([]);
 
   constructor() {
     if (localStorage.getItem(this.LOCAL_STORAGE_KEY) !== null) {
@@ -57,7 +60,7 @@ export class WatsonStoreService implements WatsonDataProviderService {
     return startOfToday;
   }
 
-  getTodaysLog(): Observable<Array<Log>> {
+  getTodaysLog(): Observable<Array<Frame>> {
     const startOfToday = this.getStartOfToday();
     const startOfTomorrow = this.getStartOfTomorrow();
     return this.frameSubject.pipe(
@@ -67,7 +70,7 @@ export class WatsonStoreService implements WatsonDataProviderService {
             f.start.getTime() > startOfToday.getTime() &&
             f.start.getTime() < startOfTomorrow.getTime()
         );
-      })
+      }),
     );
   }
 
@@ -145,5 +148,49 @@ export class WatsonStoreService implements WatsonDataProviderService {
   private getSummedDurationForTagInFrames(frames: Array<Frame>, tag: string): number {
     const filteredByTag = frames.filter(f => f.tags.includes(tag));
     return this.getDurationForFrames(filteredByTag);
+  }
+
+  private getFrameById(id: string): Frame | undefined {
+    return this.frameSubject.value.find(f => f.id === id);
+  }
+
+  editLog(id: string): Observable<void> {
+    const frame = this.getFrameById(id);
+
+    if (!frame) {
+      // TODO show error message
+      return EMPTY;
+    }
+
+    
+    return zip(this.listProjects(), this.listTags()).pipe(
+      take(1),
+      switchMap(([projects, tags]) => {
+        const dialogRef = this.dialogService.open<FrameDialogComponent, FrameDialogInput, Frame>(FrameDialogComponent, {
+          data: {
+            frame,
+            projects: projects.sort(),
+            tags: tags.sort()
+          },
+          width: '800px'
+        });
+
+        return dialogRef.afterClosed().pipe(
+          filter(Boolean),
+          tap(result => this.replaceFrame(result)),
+          map(() => {return})
+        );
+      })
+    )
+
+    
+  }
+
+  private replaceFrame(frame: Frame): void {
+    const frames = this.frameSubject.value;
+    const newFrames = frames.map(f => {
+      return f.id === frame.id ? frame: f;
+    })
+    this.frameSubject.next([...newFrames]);
   }
 }
