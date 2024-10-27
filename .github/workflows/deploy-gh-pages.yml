@@ -17,14 +17,21 @@ jobs:
     - name: Build shared library
       run:  npm run build_shared
 
-    - name: All things angular
-      uses: AhsanAyaz/angular-deploy-gh-pages-actions@v1.4.0
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v4
       with:
-        github_access_token: ${{ secrets.GITHUB_TOKEN }}
-        build_configuration: web
-        base_href: /watson-reporter/
-        deploy_branch: gh-pages
-        angular_dist_build_folder: dist/web/browser
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        public_dir: ./dist/web/browser
+
+    # - name: All things angular
+    #   uses: AhsanAyaz/angular-deploy-gh-pages-actions@v1.4.0
+    #   with:
+    #     github_access_token: ${{ secrets.GITHUB_TOKEN }}
+    #     build_configuration: web
+    #     base_href: /watson-reporter/
+    #     deploy_branch: gh-pages
+    #     angular_dist_build_folder: dist/web/browser
+
 
 permissions:
   contents: write

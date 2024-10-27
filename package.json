@@ -11,7 +11,7 @@
     "build_shared_watch": "ng build shared --watch",
     "build_shared": "ng build shared",
     "build_desktop": "ng build desktop",
-    "build_web": "ng build web",
+    "build_web": "ng build web --base-href=/watson-reporter/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "tauri": "tauri"
