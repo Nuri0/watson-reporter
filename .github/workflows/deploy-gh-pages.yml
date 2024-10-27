@@ -21,7 +21,7 @@ jobs:
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        public_dir: ./dist/web/browser
+        publish_dir: ./dist/web/browser
 
     # - name: All things angular
     #   uses: AhsanAyaz/angular-deploy-gh-pages-actions@v1.4.0
