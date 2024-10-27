@@ -17,6 +17,9 @@ jobs:
     - name: Build shared library
       run:  npm run build_shared
 
+    - name: Build app
+      run:  npm run build_web
+
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v4
       with:
