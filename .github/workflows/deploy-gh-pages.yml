@@ -1,0 +1,23 @@
+name: Build an Deploy
+on:
+  push:
+    branches:
+      - app-deployment
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: All things angular
+      uses: AhsanAyaz/angular-deploy-gh-pages-actions@v1.4.0
+      with:
+        github_access_token: ${{ secrets.GITHUB_TOKEN }}
+        build_configuration: web
+        base_href: /watson-reporter/
+        deploy_branch: gh-pages
+        angular_dist_build_folder: dist/web/browser
+
+permissions:
+  contents: write
