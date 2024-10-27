@@ -9,6 +9,7 @@
     "start_desktop": "ng serve desktop --port 4201",
     "build": "ng build",
     "build_shared_watch": "ng build shared --watch",
+    "build_shared": "ng build shared",
     "build_desktop": "ng build desktop",
     "build_web": "ng build web",
     "watch": "ng build --watch --configuration development",
